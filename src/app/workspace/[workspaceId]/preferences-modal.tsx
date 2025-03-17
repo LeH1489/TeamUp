@@ -8,14 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Input } from "@/components/ui/input";
 import { useRemoveWorkspace } from "@/features/workspaces/api/use-remove-workspace";
 import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
@@ -38,7 +31,6 @@ export const PreferencesModal = ({
   initialValue,
 }: PreferencesModalProps) => {
   const workspaceId = useWorkspaceId();
-  const router = useRouter();
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
     "This action is irreversible"

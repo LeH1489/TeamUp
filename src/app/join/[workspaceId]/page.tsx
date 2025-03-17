@@ -13,13 +13,7 @@ import { useEffect, useMemo } from "react";
 import VerificationInput from "react-verification-input";
 import { toast } from "sonner";
 
-interface JoinPageProps {
-  params: {
-    workspaceId: string;
-  };
-}
-
-const JoinPage = ({ params }: JoinPageProps) => {
+const JoinPage = () => {
   const router = useRouter();
 
   const workspaceId = useWorkspaceId();

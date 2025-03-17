@@ -113,7 +113,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
       await createMessage(values, {
         throwOnError: true,
       });
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failted to send message");
     } finally {
       setIsPending(false);

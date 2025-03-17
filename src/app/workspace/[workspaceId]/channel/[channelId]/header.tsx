@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -32,7 +31,7 @@ export const Header = ({ title }: HeaderProps) => {
   const channelId = useChannelId();
   const [editOpen, setEditOpen] = useState(false);
   const [value, setValue] = useState(title);
-  const [ConfirmDialog, setConfirmDialog] = useConfirm(
+  const [ConfirmDialog, _setConfirmDialog] = useConfirm(
     "Delete channel?",
     "You are about to delete this channel. This action cannot be undone."
   );

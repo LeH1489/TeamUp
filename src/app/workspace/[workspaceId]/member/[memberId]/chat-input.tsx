@@ -76,8 +76,9 @@ export const ChatInput = ({ placeholder, conversationId }: ChatInputProps) => {
       await createMessage(values, {
         throwOnError: true,
       });
-    } catch (error) {
-      toast.error("Failted to send message");
+    } catch (error: any) {
+      console.error("Error deleting file:", error);
+      toast.error(error.message || "Something went wrong");
     } finally {
       setIsPending(false);
       editorRef.current?.enable(true);

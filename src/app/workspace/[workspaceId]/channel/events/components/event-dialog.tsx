@@ -19,15 +19,9 @@ interface EventDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mode: "create" | "edit";
-  eventId?: string;
 }
 
-export const EventDialog = ({
-  open,
-  onOpenChange,
-  mode,
-  eventId,
-}: EventDialogProps) => {
+export const EventDialog = ({ open, onOpenChange, mode }: EventDialogProps) => {
   const workspaceId = useWorkspaceId();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");

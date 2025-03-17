@@ -6,7 +6,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { format } from "date-fns";
-import { Badge } from "@/components/ui/badge";
 
 interface EventDetailDialogProps {
   open: boolean;

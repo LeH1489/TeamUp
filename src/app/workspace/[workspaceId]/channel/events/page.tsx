@@ -29,7 +29,6 @@ export default function EventsPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [eventToDelete, setEventToDelete] = useState<string | null>(null);
   const [eventToEdit, setEventToEdit] = useState<any>(null);
 
   // Hàm xử lý khi click vào event card

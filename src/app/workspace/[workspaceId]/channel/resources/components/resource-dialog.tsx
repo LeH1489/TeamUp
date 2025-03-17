@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
-import { debounce, throttle, memoize } from "lodash";
+import { debounce, memoize } from "lodash";
 
 const ResourceDialog = ({ open, onOpenChange }: ResourceDialogProps) => {
   const workspaceId = useWorkspaceId();
@@ -168,7 +168,7 @@ const ResourceDialog = ({ open, onOpenChange }: ResourceDialogProps) => {
   //xử lý khi user xóa file chọn file khác
   const handleRemoveFile = (fileName: string) => {
     const newFiles = selectedFiles.filter((file) => file.name !== fileName);
-    setSelectedFiles((prev) => [...newFiles]);
+    setSelectedFiles(newFiles);
 
     //xóa luôn cả url preview
     if (previewUrls[fileName]) {

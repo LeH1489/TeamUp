@@ -14,11 +14,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Download, EllipsisVertical, Pencil, Trash2 } from "lucide-react";
+import { Download, EllipsisVertical, Trash2 } from "lucide-react";
 import {
   FileIcon,
-  UploadIcon,
-  XIcon,
   FileTextIcon,
   FileImageIcon,
   FileSpreadsheetIcon,
@@ -27,11 +25,11 @@ import {
   FileCodeIcon,
   Loader2,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRemoveResource } from "@/features/resources/api/use-remove-resource";
 import { Id } from "../../../../../../../convex/_generated/dataModel";
 import { toast } from "sonner";
-import { debounce, memoize } from "lodash";
+import { debounce } from "lodash";
 import dynamic from "next/dynamic";
 
 interface ResourceCardProps {
