@@ -55,6 +55,31 @@ const schema = defineSchema({
     .index("by_workspace_id", ["workspaceId"])
     .index("by_message_id", ["messageId"])
     .index("by_member_id", ["memberId"]),
+  events: defineTable({
+    workspaceId: v.id("workspaces"),
+    creatorId: v.id("members"),
+    title: v.string(), // Tiêu đề: "Làm bài tập tuần 1"
+    content: v.string(), // Nội dung: "Thầy yêu cầu làm 1 project nhỏ sử dụng HTML, CSS, JS"
+    deadline: v.number(), // Deadline dưới dạng timestamp (milliseconds)
+    status: v.union(v.literal("pending"), v.literal("expired")),
+  })
+    .index("by_workspace_id", ["workspaceId"]) // Tìm kiếm theo workspace
+    .index("by_creator_id", ["creatorId"]) // Tìm kiếm theo người tạo
+    .index("by_deadline", ["deadline"]) // Tìm kiếm theo deadline
+    .index("by_workspace_id_status", ["workspaceId", "status"]) // Tìm kiếm theo workspace và trạng thái
+    .index("by_workspace_id_deadline", ["workspaceId", "deadline"]),
+  resources: defineTable({
+    workspaceId: v.id("workspaces"),
+    uploaderId: v.id("members"),
+    name: v.string(),
+    description: v.optional(v.string()),
+    fileId: v.id("_storage"),
+    fileType: v.string(),
+  })
+    .index("by_workspace_id", ["workspaceId"])
+    .index("by_uploader_id", ["uploaderId"])
+    .index("by_file_type", ["fileType"])
+    .index("by_workspace_id_file_type", ["workspaceId", "fileType"]),
 });
 
 export default schema;

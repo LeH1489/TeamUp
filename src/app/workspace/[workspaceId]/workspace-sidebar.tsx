@@ -5,9 +5,8 @@ import {
   AlertTriangle,
   HashIcon,
   Loader,
-  MessageSquare,
-  SendHorizonal,
-  Sidebar,
+  CalendarClock,
+  Database,
 } from "lucide-react";
 import { WorkspaceHeader } from "./workspace-header";
 import { SidebarItem } from "./sidebar-item";
@@ -19,11 +18,24 @@ import { useCreateChannelModal } from "@/features/channels/store/use-create-chan
 import { useChannelId } from "@/hooks/use-channel-id";
 import { Separator } from "@/components/ui/separator";
 import { useMemberId } from "@/hooks/use-member-id";
+import { usePathname } from "next/navigation";
+import React, { useMemo } from "react";
 
 export const WorkspaceSidebar = () => {
   const memberId = useMemberId();
   const workspaceId = useWorkspaceId();
   const channelId = useChannelId();
+  const pathname = usePathname();
+
+  // Kiểm tra xem user có đang ở trang events, resources, tasks
+  const pathChecks = useMemo(
+    () => ({
+      isEventsActive: pathname === `/workspace/${workspaceId}/channel/events`,
+      isResourcesActive:
+        pathname === `/workspace/${workspaceId}/channel/resources`,
+    }),
+    [pathname, workspaceId] // Add pathname to dependencies
+  );
 
   const [_open, setOpen] = useCreateChannelModal();
 
@@ -42,13 +54,16 @@ export const WorkspaceSidebar = () => {
     workspaceId,
   });
 
+  // Memoize loading state
+  const isLoading = useMemo(
+    () =>
+      worksapceLoading || memberLoading || channelsLoading || membersLoading,
+    [worksapceLoading, memberLoading, channelsLoading, membersLoading]
+  );
+
   //loading animation
-  if (worksapceLoading || memberLoading) {
-    return (
-      <div className="flex flex-col bg-[#f2eded] h-full items-center justify-center">
-        <Loader className="size-5 animate-spin text-black" />
-      </div>
-    );
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
   //fetching data error
@@ -68,8 +83,18 @@ export const WorkspaceSidebar = () => {
         isAdmin={member.role === "admin"}
       />
       <div className="flex flex-col px-2 mt-3">
-        <SidebarItem label="Threads" icon={MessageSquare} id="threads" />
-        <SidebarItem label="Drafts & sent" icon={SendHorizonal} id="drafts" />
+        <SidebarItem
+          label="Events"
+          icon={CalendarClock}
+          id="events"
+          variant={pathChecks.isEventsActive ? "active" : "default"}
+        />
+        <SidebarItem
+          label="Public resources"
+          icon={Database}
+          id="resources"
+          variant={pathChecks.isResourcesActive ? "active" : "default"}
+        />
       </div>
 
       <Separator className="mt-3 bg-slate-300 h-[0.5px] w-full" />
@@ -110,3 +135,10 @@ export const WorkspaceSidebar = () => {
     </div>
   );
 };
+
+// Tách components nhỏ để tối ưu re-render
+const LoadingSpinner = React.memo(() => (
+  <div className="flex flex-col bg-[#f2eded] h-full items-center justify-center">
+    <Loader className="size-5 animate-spin text-black" />
+  </div>
+));
